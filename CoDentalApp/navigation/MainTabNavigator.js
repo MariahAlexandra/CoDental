@@ -6,6 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import DiagnosisForm from '../screens/DiagnosisForm';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -35,6 +36,8 @@ HomeStack.navigationOptions = {
 
 HomeStack.path = '';
 
+//
+
 const LinksStack = createStackNavigator(
   {
     Links: LinksScreen,
@@ -50,6 +53,8 @@ LinksStack.navigationOptions = {
 };
 
 LinksStack.path = '';
+
+//
 
 const SettingsStack = createStackNavigator(
   {
@@ -67,10 +72,31 @@ SettingsStack.navigationOptions = {
 
 SettingsStack.path = '';
 
+//
+
+const DiagnosisStack = createStackNavigator(
+  {
+    Form: DiagnosisForm,
+  },
+  config
+);
+
+DiagnosisStack.navigationOptions = {
+  tabBarLabel: 'Diagnosis Form',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-checkbox-outline'} />
+  ),
+};
+
+DiagnosisStack.path = '';
+
+//
+
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
+  DiagnosisStack,
 });
 
 tabNavigator.path = '';
