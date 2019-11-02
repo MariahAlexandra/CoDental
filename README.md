@@ -10,7 +10,7 @@ k;jhg
 1. git add .  
      <or>
    git add <filename>
-    Set your commit and the message or note of the changes you are about to make
+   /n Set your commit and the message or note of the changes you are about to make
 2. git commit -m "HERE ARE THE CHANGES I MADE"
     Check that your ready to push
 3. git status 
