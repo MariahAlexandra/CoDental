@@ -6,7 +6,7 @@ k;jhg
 ## Git Commands
 
 ### To push your work to the repo
-    Stage your files for commiting 
+   <b> Stage your files for commiting 
 1. git add . <br/> 
      "or" <br/>
    git add "filename"<br/>
