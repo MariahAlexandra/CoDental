@@ -8,8 +8,8 @@ k;jhg
 ### To push your work to the repo
     Stage your files for commiting 
 1. git add . <br/> 
-     <or> <br/>
-   git add <filename><br/>
+     "or" <br/>
+   git add "filename"<br/>
    /n Set your commit and the message or note of the changes you are about to make
 2. git commit -m "HERE ARE THE CHANGES I MADE"<br/>
     Check that your ready to push<br/>
