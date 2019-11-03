@@ -14,7 +14,7 @@ app = Flask(__name__)
 # Returns: 'Hello, World!'
 # Currently runs at: localhost:5000/
 
-cors = CORS(app)
+CORS(app)
 
 @app.route('/')
 def rootPage():
