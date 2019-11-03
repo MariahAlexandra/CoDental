@@ -41,25 +41,25 @@ def calculator():
 def send_data():
     points = 0 
     responses = []
-    pain = True if request.form['pain'] == 'True' else False 
+    pain = True if request.args.get('pain') == 'true' else False 
     pain = q1(pain)
     if pain != -1:
         points += 3
         responses.append(pain) 
 
-    bleeding = True if request.form['bleeding'] == 'True' else False
+    bleeding = True if request.args.get('bleeding') == 'true' else False
     bleeding = q2(bleeding)
     if bleeding != -1:
         points += 2 
         responses.append(bleeding)
     
-    meds = True if request.form['meds'] == 'True' else False
+    meds = True if request.args.get('meds') == 'true' else False
     meds = q4(meds)
     if meds != -1:
         points += 1
         responses.append(meds)
     
-    insurance = True if request.form['insurance'] == 'True' else False 
+    insurance = True if request.args.get('insurance') == 'true' else False 
     insurance = q5(insurance)
     if insurance != -1:
         points += 4
