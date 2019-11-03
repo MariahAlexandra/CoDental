@@ -13,7 +13,8 @@ import {
   CheckBox,
   TextInput,
   Picker,
-  ActivityIndicator
+  ActivityIndicator,
+  Switch
 } from 'react-native';
 import { Formik } from 'formik';
 
@@ -31,7 +32,7 @@ export default function DiagnosisForm() {
       <View style = {styles.formContainer}>
       <Formik
         initialValues={{name: '', age: 0, gender: '', medications: false, bleeding: false, insurance: false, 
-          symptom1: false, symptom2: false, symptom3: false, symptom4: false, pain: false}}
+          clicking: false, jointPain: false, toothPain: false, diffOpening: false, diffChewing: false}}
         onSubmit={(values, actions) => {
           console.log(JSON.stringify(values));
           setTimeout(() => {
@@ -60,28 +61,71 @@ export default function DiagnosisForm() {
                 />
 
                 <Text>Gender</Text>
-                <Picker
+                <TextInput
                   style={styles.inputBox}
-                  onValueChange = {formikProps.handleChange("gender")}
+                  onChangeText={formikProps.handleChange("gender")}
                   required
-                >
-                  <Picker.Item label = 'Male' value = 'male' />
-                  <Picker.Item label = 'Female' value = 'Female' />
-                </Picker>
+                />
             </View>
           }
 
           {step == 2 &&
             <View>
-              <Text style = {styles.formHeading}>Situation</Text>
-                <Text>Medications</Text>
-
+              <Text style = {styles.formHeading}>Medications and Diet</Text>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Are you taking any medicine(s) including non-prescription medicine?</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("medications", value)} value = {formikProps.values.medications} />
+                </View>
             </View>
           }
 
           {step == 3 &&
             <View>
-            <Text style = {styles.formHeading}>Symptoms</Text>
+            <Text style = {styles.formHeading}>Habits</Text>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Do your gums bleed while brushing or flossing?</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("bleeding", value)} value = {formikProps.values.bleeding} />
+                </View>
+
+            </View>
+          }
+
+
+          {step == 4 &&
+            <View>
+            <Text style = {styles.formHeading}>Dental Insurance</Text>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Do you have dental insurance?</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("insurance", value)} value = {formikProps.values.insurance} />
+                </View>
+
+            </View>
+          }
+
+
+          {step == 5 &&
+            <View>
+            <Text style = {styles.formHeading}>Do you experience any of the following symptoms?</Text>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Clicking</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("clicking", value)} value = {formikProps.values.clicking} />
+                </View>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Pain in joints, ears, or side of face</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("jointPain", value)} value = {formikProps.values.jointPain} />
+                </View>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Pain in teeth</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("toothPain", value)} value = {formikProps.values.toothPain} />
+                </View>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Difficulty opening or closing your mouth</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("diffOpening", value)} value = {formikProps.values.diffOpening} />
+                </View>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Difficulty chewing</Text>
+                  <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("diffChewing", value)} value = {formikProps.values.diffChewing} />
+                </View>
 
             </View>
           }
@@ -106,7 +150,7 @@ export default function DiagnosisForm() {
             <View style = {styles.styleRBut}>
               {formikProps.isSubmitting ? (
                 <ActivityIndicator />
-                ) : ( submit && step == 3 &&
+                ) : ( submit && step == 5 &&
                 <Button
                   style={styles.formButton}
                   title="Submit"
@@ -114,7 +158,7 @@ export default function DiagnosisForm() {
                 />
               )}
 
-              {next && step < 3 && formikProps.values.name != '' && formikProps.values.age != 0 &&
+              {next && step < 5 && formikProps.values.name != '' && formikProps.values.age != 0 && formikProps.values.gender != '' &&
                 <Button
                   style = {styles.styleButton}
                   title = 'Next'
@@ -123,7 +167,7 @@ export default function DiagnosisForm() {
                     if(back == false && step > 1) {
                       setBackView(back = true);
                     }
-                    if(step == 3) {
+                    if(step == 5) {
                       setSubView(submit = true);
                     }
                   }
