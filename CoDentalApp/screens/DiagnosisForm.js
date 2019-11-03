@@ -64,9 +64,9 @@ export default function DiagnosisForm() {
           request.open('POST', link);
           request.send({});
           console.log('response request', request)
-          console.log('response1',request['response']);
-          console.log('response2',request[response]);
-          // console.log('response3',request.response);
+          //console.log('response1',request['response']);
+          //console.log('response2',request[response]);
+          //console.log('response3',request.response);
 
         }}
       >
