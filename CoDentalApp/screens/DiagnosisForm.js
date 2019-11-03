@@ -10,7 +10,12 @@ import {
   View,
   Button,
   Alert,
+  CheckBox,
+  TextInput,
+  Picker,
+  ActivityIndicator
 } from 'react-native';
+import { Formik } from 'formik';
 
 import { MonoText } from '../components/StyledText';
 
@@ -24,58 +29,111 @@ export default function DiagnosisForm() {
   return (
     <View style = {styles.root}>
       <View style = {styles.formContainer}>
-        </View>
-      </View>
-      <View style = {styles.buttonContainerContainer}>
-        <View style = {styles.buttonContainer}>
-          <View style = {styles.styleLBut}>
-            {back && step > 1 &&
-              <Button
-                style = {styles.styleBut}
-                title = 'Back'
-                onPress = {() => {
-                    if(step >= 2) {
-                      setStep(--step);
+      <Formik
+        initialValues={{name: '', age: 0, gender: '',}}
+        onSubmit={(values, actions) => {
+          console.log(JSON.stringify(values));
+          setTimeout(() => {
+            actions.setSubmitting(false);
+          }, 1000)
+          actions.setSubmitting(false);
+        }}
+      >
+      {formikProps => (
+        <React.Fragment>
+          {step == 1 &&
+            <View>
+              <Text style = {styles.formHeading}>Personal Info</Text>
+                <Text>Name</Text>
+                <TextInput
+                  style={styles.inputBox}
+                  onChangeText={formikProps.handleChange("name")}
+                  required
+                />
+
+                <Text>Age</Text>
+                <TextInput
+                  style={styles.inputBox}
+                  onChangeText={formikProps.handleChange("age")}
+                  required
+                />
+
+                <Text>Gender</Text>
+                <Picker
+                  style={styles.inputBox}
+                  onValueChange = {formikProps.handleChange("gender")}
+                  required
+                >
+                  <Picker.Item label = 'Male' value = 'male' />
+                  <Picker.Item label = 'Female' value = 'Female' />
+                </Picker>
+            </View>
+          }
+
+          {step == 2 &&
+            <View>
+              <Text style = {styles.formHeading}>Situation</Text>
+
+            </View>
+          }
+
+          {step == 3 &&
+            <View>
+            <Text style = {styles.formHeading}>Symptoms</Text>
+
+            </View>
+          }
+
+
+          <View style = {styles.buttonContainer}>
+            <View style = {styles.styleLBut}>
+              {back && step > 1 &&
+                <Button
+                  style = {styles.styleBut}
+                  title = 'Back'
+                  onPress = {() => {
+                      if(step >= 2) {
+                        setStep(--step);
+                      }
                     }
-                    Alert.alert(step.toString());
                   }
-                }
-              />
-            }
-          </View>
-        </View>
-
-        <View style = {styles.buttonContainer}>
-          <View style = {styles.styleRBut}>
-            {next && step < 7 &&
-              <Button
-                style = {styles.styleButton}
-                title = 'Next'
-                onPress = {() => {
-                  setStep(++step);
-                  if(back == false && step > 1) {
-                    setBackView(back = true);
-                  }
-                  if(step == 7) {
-                    setSubView(submit = true);
-                  }
-                  Alert.alert(step.toString());
-                }
+                />
               }
-              />
-            }
-          </View>
+            </View>
 
-          <View style = {styles.styleRBut}>
-            {submit && step == 7 &&
-              <Button
-                title = 'Submit'
-                onPress = {() => Alert.alert(step.toString())}
-              />
-            }
-          </View>
+            <View style = {styles.styleRBut}>
+              {formikProps.isSubmitting ? (
+                <ActivityIndicator />
+                ) : ( submit && step == 3 &&
+                <Button
+                  style={styles.formButton}
+                  title="Submit"
+                  onPress={ formikProps.handleSubmit}
+                />
+              )}
 
-        </View>
+              {next && step < 3 &&
+                <Button
+                  style = {styles.styleButton}
+                  title = 'Next'
+                  onPress = {() => {
+                    setStep(++step);
+                    if(back == false && step > 1) {
+                      setBackView(back = true);
+                    }
+                    if(step == 3) {
+                      setSubView(submit = true);
+                    }
+                  }
+                }
+                />
+              }
+
+            </View>
+          </View>
+        </React.Fragment>
+          )}
+      </Formik>
       </View>
     </View>
   );
@@ -94,39 +152,47 @@ const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
     height: '100%',
-    paddingBottom: 35,
+    paddingBottom: 45,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingTop: 10,
   },
 
-  child: {
-    width: '100%',
-    height: '100%',
+  formHeading: {
+    fontSize: 20,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 
-  buttonContainerContainer: {
+  inputBox: {
+    borderWidth: 1,
+    borderColor: '#DDD',
+    marginBottom: 15,
+  },
+
+  buttonContainer: {
     width: '100%',
     height: 35,
     display: 'flex',
     flexDirection: 'row',
-    bottom: 0,
+    justifyContent: 'space-evenly',
+    alignSelf: 'center',
+    bottom: 10,
     position: 'absolute',
   },
 
-  buttonContainer: {
-      width: '50%',
-      height: 35,
-  },
-
   styleLBut: {
-    width: '98%',
     display: 'flex',
-    alignSelf: 'center',
-    paddingLeft: '1%',
+    width: '49%',
+    height: 35,
+    marginRight: '1%'
   },
 
   styleRBut: {
-    width: '98%',
     display: 'flex',
-    alignSelf: 'center',
-    paddingRight: '1%',
+    width: '49%',
+    height: 35,
+    marginLeft: '1%'
   },
 });
