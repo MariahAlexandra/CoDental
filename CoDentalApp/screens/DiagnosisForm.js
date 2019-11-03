@@ -30,7 +30,8 @@ export default function DiagnosisForm() {
     <View style = {styles.root}>
       <View style = {styles.formContainer}>
       <Formik
-        initialValues={{name: '', age: 0, gender: '',}}
+        initialValues={{name: '', age: 0, gender: '', medications: false, bleeding: false, insurance: false, 
+          symptom1: false, symptom2: false, symptom3: false, symptom4: false, pain: false}}
         onSubmit={(values, actions) => {
           console.log(JSON.stringify(values));
           setTimeout(() => {
@@ -73,6 +74,7 @@ export default function DiagnosisForm() {
           {step == 2 &&
             <View>
               <Text style = {styles.formHeading}>Situation</Text>
+                <Text>Medications</Text>
 
             </View>
           }
@@ -112,7 +114,7 @@ export default function DiagnosisForm() {
                 />
               )}
 
-              {next && step < 3 &&
+              {next && step < 3 && formikProps.values.name != '' && formikProps.values.age != 0 &&
                 <Button
                   style = {styles.styleButton}
                   title = 'Next'
