@@ -261,26 +261,42 @@ prediction = img_class[0]
 classname = img_class[0]
 print("Class: ","dog" if classname == 1 else "cat")
 
-# Visualize the Model
+#Now lets predict on the first 10 Images of the test set
+X_test, y_test = read_and_process_image(test_imgs[0:10]) #Y_test in this case will be empty.
+x = np.array(X_test)
+test_datagen = ImageDataGenerator(rescale=1./255)
 
-# acc = history.history['accuracy']
-# val_acc = history.history['val_accuracy']
+i = 0
+text_labels = []
+# plt.figure(figsize=(30,20))
+for batch in test_datagen.flow(x, batch_size=1):
+    pred = model.predict(batch)
+    if pred > 0.5:
+        text_labels.append('dog')
+    else:
+        text_labels.append('cat')
+    # plt.subplot(5 / columns + 1, columns, i + 1)
+    # plt.title('This is a ' + text_labels[i])
+    # imgplot = plt.imshow(batch[0])
+    i += 1
+    if i % 10 == 0:
+        break
+# plt.show()#lets save our prediction and submit
+# counter = range(1, len(test_imgs) + 1)
+# df_solution = pd.DataFrame({"id": counter, "label":list(pred)})
+# cols = ['label']
 
-# loss = history.history['loss']
-# val_loss = history.history['val_loss']
+# for col in cols:
+#     df_solution[col] = df_solution[col].map(lambda x: str(x).lstrip('[').rstrip(']')).astype(float)
 
-# epochs_range = range(epochs)
+# df_solution.to_csv("submissiondogsVScats.csv", index = False)
 
-# plt.figure(figsize=(8, 8))
-# plt.subplot(1, 2, 1)
-# plt.plot(epochs_range, acc, label='Training Accuracy')
-# plt.plot(epochs_range, val_acc, label='Validation Accuracy')
-# plt.legend(loc='lower right')
-# plt.title('Training and Validation Accuracy')
+#lets save our prediction and submit
+# counter = range(1, len(test_imgs) + 1)
+# df_solution = pd.DataFrame({"id": counter, "label":list(pred)})
+# cols = ['label']
 
-# plt.subplot(1, 2, 2)
-# plt.plot(epochs_range, loss, label='Training Loss')
-# plt.plot(epochs_range, val_loss, label='Validation Loss')
-# plt.legend(loc='upper right')
-# plt.title('Training and Validation Loss')
-# plt.show()
+# for col in cols:
+#     df_solution[col] = df_solution[col].map(lambda x: str(x).lstrip('[').rstrip(']')).astype(float)
+
+# df_solution.to_csv("submissiondogsVScats.csv", index = False)
