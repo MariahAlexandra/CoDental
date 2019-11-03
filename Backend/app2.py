@@ -1,6 +1,8 @@
 from flask import Flask, request, render_template, Response, redirect, url_for
 from project import app
 from questionaire import *
+
+app = Flask(__name__)
 # from project.services.EventService import *
 # from project.services.VenueService import *
 
