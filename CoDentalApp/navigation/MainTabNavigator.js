@@ -93,10 +93,7 @@ DiagnosisStack.path = '';
 //
 
 const tabNavigator = createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
-  DiagnosisStack,
+  DiagnosisStack
 });
 
 tabNavigator.path = '';
