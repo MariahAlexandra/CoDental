@@ -31,14 +31,35 @@ export default function DiagnosisForm() {
     <View style = {styles.root}>
       <View style = {styles.formContainer}>
       <Formik
-        initialValues={{name: '', age: 0, gender: '', medications: false, bleeding: false, insurance: false, 
+        initialValues={{name: '', age: 0, gender: '', medications: false, bleeding: false, insurance: false,
           clicking: false, jointPain: false, toothPain: false, diffOpening: false, diffChewing: false}}
         onSubmit={(values, actions) => {
-          console.log(JSON.stringify(values));
+          console.log(values);
+          console.log(values['medications'])
           setTimeout(() => {
             actions.setSubmitting(false);
           }, 1000)
           actions.setSubmitting(false);
+
+          var formData = new FormData();
+          /*formData.append('name', values['name']);
+          formData.append('age', values['age']);
+          formData.append('gender', values['gender']);*/
+          formData.append('meds', values['medications']);
+          formData.append('bleeding', values['bleeding']);
+          formData.append('insurance', values['insurance']);
+          formData.append('pain', values['toothPain']);
+          /*formData.append('dataDictionary','');
+          formData.append('dataDictionary',);
+          formData.append('dataDictionary',);
+          formData.append('dataDictionary',);*/
+
+          var request = new XMLHttpRequest();
+          console.log(formData);
+          request.open('POST', 'http://tiffkwin.pythonanywhere.com/send_data');
+
+          request.send(formData);
+          console.log('response',request.response);
         }}
       >
       {formikProps => (
@@ -106,23 +127,23 @@ export default function DiagnosisForm() {
           {step == 5 &&
             <View>
             <Text style = {styles.formHeading}>Do you experience any of the following symptoms?</Text>
-                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
-                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Clicking</Text>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5, marginTop: 10}}>
+                  <Text style={{flex: 1, alignSelf: 'flex-start'}}>Jaw clicking</Text>
                   <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("clicking", value)} value = {formikProps.values.clicking} />
                 </View>
-                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5, marginTop: 10}}>
                   <Text style={{flex: 1, alignSelf: 'flex-start'}}>Pain in joints, ears, or side of face</Text>
                   <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("jointPain", value)} value = {formikProps.values.jointPain} />
                 </View>
-                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5, marginTop: 10}}>
                   <Text style={{flex: 1, alignSelf: 'flex-start'}}>Pain in teeth</Text>
                   <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("toothPain", value)} value = {formikProps.values.toothPain} />
                 </View>
-                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5, marginTop: 10}}>
                   <Text style={{flex: 1, alignSelf: 'flex-start'}}>Difficulty opening or closing your mouth</Text>
                   <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("diffOpening", value)} value = {formikProps.values.diffOpening} />
                 </View>
-                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5}}>
+                <View style={{width: '100%', flexDirection: 'row', paddingLeft: 5, paddingRight: 5, marginTop: 10}}>
                   <Text style={{flex: 1, alignSelf: 'flex-start'}}>Difficulty chewing</Text>
                   <Switch style={{flex: 1, alignSelf: 'flex-end'}} onValueChange = {value => formikProps.setFieldValue("diffChewing", value)} value = {formikProps.values.diffChewing} />
                 </View>
