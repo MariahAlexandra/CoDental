@@ -17,6 +17,23 @@ app = Flask(__name__)
 def rootPage():
     return 'hello, world'
 
+@app.route('/calculator')
+def calculator():
+    num1 = int(request.args.get('num1'))
+    num2 = int(request.args.get('num2'))
+    operation = request.args.get('operation')
+
+    result = -1
+
+    if operation == 'multiply':
+        result = num1 * num2
+    elif operation == 'subtract':
+        result = num1 - num2
+    elif operation == 'add':
+        result = num1 + num2
+
+    return Response(str(result), status=200)
+
 @app.route('/send_data', methods=['POST'])
 def send_data():
     points = 0 
