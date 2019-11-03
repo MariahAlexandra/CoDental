@@ -24,7 +24,6 @@ export default function DiagnosisForm() {
   return (
     <View style = {styles.root}>
       <View style = {styles.formContainer}>
-        <View style= {styles.child}>
         </View>
       </View>
       <View style = {styles.buttonContainerContainer}>
