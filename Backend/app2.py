@@ -1,6 +1,7 @@
-from flask import Flask, request, render_template, Response, redirect, url_for
+from flask import Flask, request, render_template, Response, redirect, url_for, jsonify 
 # from project import app
 from questionaire import *
+
 
 app = Flask(__name__)
 # from project.services.EventService import *
@@ -54,7 +55,7 @@ def send_data():
         severity = 'high'
     
     res = {"severity":severity, 'responses':responses}
-    return res
+    return jsonify(res)
 
 
 if __name__ == "__main__":
