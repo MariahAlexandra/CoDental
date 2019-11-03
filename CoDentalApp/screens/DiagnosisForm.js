@@ -49,6 +49,8 @@ export default function DiagnosisForm() {
           formData.append('bleeding', values['bleeding']);
           formData.append('insurance', values['insurance']);
           formData.append('pain', values['toothPain']);
+
+          // var meds = values['medications']
           /*formData.append('dataDictionary','');
           formData.append('dataDictionary',);
           formData.append('dataDictionary',);
@@ -56,10 +58,16 @@ export default function DiagnosisForm() {
 
           var request = new XMLHttpRequest();
           console.log(formData);
-          request.open('POST', 'http://tiffkwin.pythonanywhere.com/send_data');
+          var link = "http://tiffkwin.pythonanywhere.com/send_data?meds={values['medications']}&bleeding={values['bleeding']}&pain={values['toothPain']}&insurance={values['insurance']}";
+          console.log('link: ', link);
 
-          request.send(formData);
-          console.log('response',request.response);
+          request.open('POST', link);
+          request.send({});
+          console.log('response request', request)
+          console.log('response1',request['response']);
+          console.log('response2',request[response]);
+          // console.log('response3',request.response);
+
         }}
       >
       {formikProps => (
