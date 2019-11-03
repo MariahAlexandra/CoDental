@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, Response, redirect, url_for, jsonify 
 # from project import app
 from questionaire import *
+from flask_cors import CORS
 
 
 app = Flask(__name__)
@@ -12,6 +13,8 @@ app = Flask(__name__)
 # Parameters: none
 # Returns: 'Hello, World!'
 # Currently runs at: localhost:5000/
+
+cors = CORS(app)
 
 @app.route('/')
 def rootPage():
